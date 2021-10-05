@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/drawable/background_color.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/drawable/edittext_background.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/activity_home.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/activity_registration.xml" value="0.209375" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/activity_reset.xml" value="0.209375" />
       </map>
     </option>
   </component>
