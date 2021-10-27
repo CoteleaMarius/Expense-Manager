@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="toolbarColor">#FFFF0026</color>
     <color name="nav_header">#0B1ECA</color>
+    <color name="dashboard_color">#FF1CADE6</color>
+    <color name="income_color">#7019BC</color>
+    <color name="expense_color">#10CD4F</color>
 </resources>
