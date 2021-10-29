@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //TODO:User data needs to be saved to check if the user is loged in.
-                            //task.getResult().getUser().getUid();
                             mDialog.dismiss();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             Toast.makeText(getApplicationContext(), "Login succesful", Toast.LENGTH_LONG).show();
