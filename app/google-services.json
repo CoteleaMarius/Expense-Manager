@@ -2,7 +2,8 @@
   "project_info": {
     "project_number": "322981320",
     "project_id": "expense-manager-889d9",
-    "storage_bucket": "expense-manager-889d9.appspot.com"
+    "storage_bucket": "expense-manager-889d9.appspot.com",
+    "databaseURL": "https://expense-manager-889d9-default-rtdb.firebaseio.com/"
   },
   "client": [
     {
