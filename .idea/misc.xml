@@ -11,11 +11,14 @@
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/activity_reset.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/appbar_layout.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/custom_layout_for_insert_data.xml" value="0.209375" />
-        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/fragment_dashboard.xml" value="0.209375" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/expense_recycler_data.xml" value="0.209375" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/fragment_dashboard.xml" value="0.22" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/fragment_expense.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/fragment_income.xml" value="0.209375" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/income_recycler_data.xml" value="0.25" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/main_content.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/nav_header.xml" value="0.209375" />
+        <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/layout/update_data_item.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/menu/bottom_menu.xml" value="0.209375" />
         <entry key="..\:/Users/mariu/AndroidStudioProjects/ExpenseManager/app/src/main/res/menu/navmenu.xml" value="0.209375" />
       </map>
