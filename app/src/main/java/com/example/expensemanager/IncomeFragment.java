@@ -25,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class IncomeFragment extends Fragment {
     //Firebase database
     private FirebaseAuth mAuth;
@@ -171,7 +174,7 @@ public class IncomeFragment extends Fragment {
         }
     }
 
-    private void updateDataItem(){
+    private void updateDataItem() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myView = inflater.inflate(R.layout.update_data_item, null);
@@ -186,18 +189,28 @@ public class IncomeFragment extends Fragment {
         edtNote.setSelection(note.length());
         edtAmount.setText(String.valueOf(amount));
         edtAmount.setSelection(String.valueOf(amount).length());
+
         btnUpdate = myView.findViewById(R.id.btnUpdate);
         btnDelete = myView.findViewById(R.id.btnDelete);
         final AlertDialog dialog = myDialog.create();
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                type = edtType.getText().toString().trim();
+                note = edtNote.getText().toString().trim();
+                String mdAmount = String.valueOf(amount);
+                mdAmount = edtAmount.getText().toString().trim();
+                int myAmount = Integer.parseInt(mdAmount);
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(myAmount, type, note, postKey, mDate);
+                mIncomeDatabase.child(postKey).setValue(data);
+                dialog.dismiss();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mIncomeDatabase.child(postKey).removeValue();
                 dialog.dismiss();
             }
         });
