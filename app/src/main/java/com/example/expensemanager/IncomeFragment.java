@@ -39,7 +39,7 @@ public class IncomeFragment extends Fragment {
     private TextView incomeSum;
     //Update edit text
     private EditText edtAmount;
-    private EditText edtType;
+    private Spinner spType;
     private EditText edtNote;
     //Update and Delete button
     private Button btnUpdate;
@@ -181,11 +181,10 @@ public class IncomeFragment extends Fragment {
         View myView = inflater.inflate(R.layout.update_data_item, null);
         myDialog.setView(myView);
         edtAmount = myView.findViewById(R.id.amount_edt);
-        edtType = myView.findViewById(R.id.type_edt);
+        spType = myView.findViewById(R.id.updateDropdown);
         edtNote = myView.findViewById(R.id.note_edt);
         //Set data edit text
-        edtType.setText(type);
-        edtType.setSelection(type.length());
+        spType.setSelection(0);
         edtNote.setText(note);
         edtNote.setSelection(note.length());
         edtAmount.setText(String.valueOf(amount));
@@ -197,7 +196,7 @@ public class IncomeFragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type = edtType.getText().toString().trim();
+                type = spType.getSelectedItem().toString().trim();
                 note = edtNote.getText().toString().trim();
                 String mdAmount = String.valueOf(amount);
                 mdAmount = edtAmount.getText().toString().trim();

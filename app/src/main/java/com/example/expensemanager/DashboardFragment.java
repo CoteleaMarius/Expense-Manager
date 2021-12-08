@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -235,18 +236,18 @@ public class DashboardFragment extends Fragment {
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
         final EditText edtAmount = myView.findViewById(R.id.amount_edt);
-        final EditText edtType = myView.findViewById(R.id.type_edt);
+        final Spinner edtType = myView.findViewById(R.id.dropdown);
         final EditText edtNote = myView.findViewById(R.id.note_edt);
         Button btnSave = myView.findViewById(R.id.btnSave);
         Button btnCancel = myView.findViewById(R.id.btnCancel);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = edtType.getText().toString().trim();
+                String type = edtType.getSelectedItem().toString().trim();
                 String amount = edtAmount.getText().toString().trim();
                 String note = edtNote.getText().toString().trim();
                 if (TextUtils.isEmpty(type)) {
-                    edtType.setError("Required field");
+                    Toast.makeText(getActivity(), "Select a type", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(amount)) {
@@ -285,7 +286,7 @@ public class DashboardFragment extends Fragment {
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
         final EditText amount = myView.findViewById(R.id.amount_edt);
-        final EditText type = myView.findViewById(R.id.type_edt);
+        final Spinner type = myView.findViewById(R.id.dropdown);
         final EditText note = myView.findViewById(R.id.note_edt);
         Button btnSave = myView.findViewById(R.id.btnSave);
         Button btnCancel = myView.findViewById(R.id.btnCancel);
@@ -293,7 +294,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String tmAmount = amount.getText().toString().trim();
-                String tmType = type.getText().toString().trim();
+                String tmType = type.getSelectedItem().toString().trim();
                 String tmNote = note.getText().toString().trim();
                 if (TextUtils.isEmpty(tmAmount)) {
                     amount.setError("Required field");
@@ -301,7 +302,7 @@ public class DashboardFragment extends Fragment {
                 }
                 int inamount = Integer.parseInt(tmAmount);
                 if (TextUtils.isEmpty(tmType)) {
-                    type.setError("Required field");
+                   Toast.makeText(getActivity(), "Select a type", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(tmNote)) {

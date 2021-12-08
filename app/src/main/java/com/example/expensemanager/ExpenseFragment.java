@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.expensemanager.Model.Data;
@@ -39,7 +40,7 @@ public class ExpenseFragment extends Fragment {
 
     //Edit data item
     private EditText edtAmount;
-    private EditText edtType;
+    private Spinner spType;
     private EditText edtNote;
     private Button btnUpdate;
     private Button btnDelete;
@@ -183,9 +184,8 @@ public class ExpenseFragment extends Fragment {
         myDialog.setView(myView);
         edtAmount = myView.findViewById(R.id.amount_edt);
         edtNote = myView.findViewById(R.id.note_edt);
-        edtType = myView.findViewById(R.id.type_edt);
-        edtType.setText(type);
-        edtType.setSelection(type.length());
+        spType = myView.findViewById(R.id.updateDropdown);
+        spType.setSelection(0);
         edtNote.setText(note);
         edtNote.setSelection(note.length());
         edtAmount.setText(String.valueOf(amount));
@@ -196,7 +196,7 @@ public class ExpenseFragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type = edtType.getText().toString().trim();
+                type = spType.getSelectedItem().toString().trim();
                 note = edtNote.getText().toString().trim();
                 String stAmount = String.valueOf(amount);
                 stAmount = edtAmount.getText().toString().trim();
