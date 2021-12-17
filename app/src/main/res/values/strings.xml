@@ -3,11 +3,19 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="incomeExpenseTypes">
+    <string-array name="expenseExpenseTypes">
         <item>Taxes</item>
         <item>Healthcare</item>
         <item>Food</item>
         <item>Transportation</item>
         <item>Housing</item>
     </string-array>
+    <string-array name="incomeExpenseTypes">
+        <item>Salary</item>
+        <item>Gifts</item>
+        <item>Allowance</item>
+        <item>Interest</item>
+        <item>Investments</item>
+    </string-array>
+
 </resources>

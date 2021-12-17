@@ -67,15 +67,26 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2">
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/updateDropdown"
-                    android:entries="@array/incomeExpenseTypes"></Spinner>
-                    <!--<EditText
-                        android:id="@+id/type_edt"
+
+                    <EditText
+                        android:id="@+id/editTextUpdate"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />-->
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible" />
+
+                    <Spinner
+                        android:id="@+id/updateDropdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/incomeExpenseTypes"
+                        android:visibility="visible"></Spinner>
+
+                    <Spinner
+                        android:id="@+id/updateDropdown2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/expenseExpenseTypes"
+                        android:visibility="invisible"></Spinner>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -108,6 +119,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Another type" />
+
+                <CheckBox
+                    android:id="@+id/updateCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout

@@ -54,15 +54,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 switch (item.getItemId()) {
                     case R.id.dashboard:
                         setFragment(dashboardFragment);
-                        bottomNavigationView.setItemBackgroundResource(R.color.dashboard_color);
+                        bottomNavigationView.setItemBackgroundResource(R.color.income_color);
                         return true;
                     case R.id.income:
                         setFragment(incomeFragment);
-                        bottomNavigationView.setItemBackgroundResource(R.color.income_color);
+                        bottomNavigationView.setItemBackgroundResource(R.color.expense_color);
                         return true;
                     case R.id.expense:
                         setFragment(expenseFragment);
-                        bottomNavigationView.setItemBackgroundResource(R.color.expense_color);
+                        bottomNavigationView.setItemBackgroundResource(R.color.expense_amount);
                         return true;
                     default:
                         return false;

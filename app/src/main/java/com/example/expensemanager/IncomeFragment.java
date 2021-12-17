@@ -8,16 +8,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.expensemanager.Model.Data;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +37,12 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class IncomeFragment extends Fragment {
+    private CheckBox checkBox;
+    private EditText editText;
+    private boolean isOpen = false;
+    private TextView fab_income_txt;
+    private Animation FadOpen, FadClose;
+    private FloatingActionButton fab_main;
     //Firebase database
     private FirebaseAuth mAuth;
     private DatabaseReference mIncomeDatabase;
@@ -51,6 +64,8 @@ public class IncomeFragment extends Fragment {
     private String postKey;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    //Floating action buttons
+    private FloatingActionButton fab_income_btn;
 
     private String mParam1;
     private String mParam2;
@@ -82,6 +97,30 @@ public class IncomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_income, container, false);
+        fab_income_txt = myView.findViewById(R.id.income_ft_text);
+        fab_income_btn = myView.findViewById(R.id.income_ft_btn);
+        FadOpen = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_open);
+        FadClose = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_close);
+        fab_main = myView.findViewById(R.id.fb_main_plus_btn);
+        fab_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addData();
+                if (isOpen) {
+                    fab_income_btn.startAnimation(FadClose);
+                    fab_income_btn.setClickable(false);
+                    fab_income_txt.startAnimation(FadClose);
+                    fab_income_txt.setClickable(false);
+                    isOpen = false;
+                } else {
+                    fab_income_btn.startAnimation(FadOpen);
+                    fab_income_btn.setClickable(true);
+                    fab_income_txt.startAnimation(FadOpen);
+                    fab_income_txt.setClickable(true);
+                    isOpen = true;
+                }
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
@@ -182,6 +221,10 @@ public class IncomeFragment extends Fragment {
         myDialog.setView(myView);
         edtAmount = myView.findViewById(R.id.amount_edt);
         spType = myView.findViewById(R.id.updateDropdown);
+        spType.setVisibility(View.VISIBLE);
+        checkBox = myView.findViewById(R.id.updateCheckbox);
+        editText = myView.findViewById(R.id.editTextUpdate);
+        myView.findViewById(R.id.updateDropdown2).setVisibility(View.INVISIBLE);
         edtNote = myView.findViewById(R.id.note_edt);
         //Set data edit text
         spType.setSelection(0);
@@ -193,13 +236,29 @@ public class IncomeFragment extends Fragment {
         btnUpdate = myView.findViewById(R.id.btnUpdate);
         btnDelete = myView.findViewById(R.id.btnDelete);
         final AlertDialog dialog = myDialog.create();
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(checkBox.isChecked()){
+                    spType.setVisibility(View.INVISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                }else{
+                    spType.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type = spType.getSelectedItem().toString().trim();
                 note = edtNote.getText().toString().trim();
                 String mdAmount = String.valueOf(amount);
                 mdAmount = edtAmount.getText().toString().trim();
+                if(checkBox.isChecked()){
+                    type = editText.getText().toString().trim();
+                }else{
+                    type = spType.getSelectedItem().toString().trim();
+                }
                 int myAmount = Integer.parseInt(mdAmount);
                 String mDate = DateFormat.getDateInstance().format(new Date());
                 Data data = new Data(myAmount, type, note, postKey, mDate);
@@ -215,5 +274,102 @@ public class IncomeFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+
+    private void ftAnimation() {
+        if (isOpen) {
+            fab_income_btn.startAnimation(FadClose);
+            fab_income_btn.setClickable(false);
+            fab_income_txt.startAnimation(FadClose);
+            fab_income_txt.setClickable(false);
+            isOpen = false;
+        } else {
+            fab_income_btn.startAnimation(FadOpen);
+            fab_income_btn.setClickable(true);
+            fab_income_txt.startAnimation(FadOpen);
+            fab_income_txt.setClickable(true);
+            isOpen = true;
+        }
+    }
+
+    public void incomeDataInsert() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View myView = inflater.inflate(R.layout.custom_layout_for_insert_data, null);
+        myDialog.setView(myView);
+        final AlertDialog dialog = myDialog.create();
+        dialog.setCancelable(false);
+        checkBox = myView.findViewById(R.id.category_check);
+        editText = myView.findViewById(R.id.edittextCategory);
+        final EditText edtAmount = myView.findViewById(R.id.amount_edt);
+        final Spinner edtType = myView.findViewById(R.id.dropdown);
+        edtType.setVisibility(View.VISIBLE);
+        myView.findViewById(R.id.dropdown2).setVisibility(View.INVISIBLE);
+        final EditText edtNote = myView.findViewById(R.id.note_edt);
+        Button btnSave = myView.findViewById(R.id.btnSave);
+        Button btnCancel = myView.findViewById(R.id.btnCancel);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (checkBox.isChecked()) {
+                    edtType.setVisibility(View.INVISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                } else {
+                    edtType.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String type;
+                String amount = edtAmount.getText().toString().trim();
+                String note = edtNote.getText().toString().trim();
+                if (checkBox.isChecked()) {
+                    type = editText.getText().toString().trim();
+                } else {
+                    type = edtType.getSelectedItem().toString().trim();
+                }
+                if (TextUtils.isEmpty(type)) {
+                    Toast.makeText(getActivity(), "Select a type", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(amount)) {
+                    edtAmount.setError("Required field");
+                    return;
+                }
+                int ourammountint = Integer.parseInt(amount);
+
+                if (TextUtils.isEmpty(note)) {
+                    edtNote.setError("Required field");
+                    return;
+                }
+                String id = mIncomeDatabase.push().getKey();
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(ourammountint, type, note, id, mDate);
+                mIncomeDatabase.child(id).setValue(data);
+                Toast.makeText(getActivity(), "Data Added", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ftAnimation();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void addData() {
+        //Fab Button income
+        fab_income_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                incomeDataInsert();
+            }
+        });
     }
 }

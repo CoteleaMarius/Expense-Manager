@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -62,6 +63,8 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    private EditText editText;
+    private CheckBox checkBox;
     //Floating button
     private FloatingActionButton fab_main;
     private FloatingActionButton fab_income_btn;
@@ -226,6 +229,7 @@ public class DashboardFragment extends Fragment {
         fab_expense_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 expenseDataInsert();
             }
         });
@@ -235,20 +239,45 @@ public class DashboardFragment extends Fragment {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myView = inflater.inflate(R.layout.custom_layout_for_insert_data, null);
+        TextView textView = myView.findViewById(R.id.inputType);
+        textView.setText("Income ");
         myDialog.setView(myView);
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
+        checkBox = myView.findViewById(R.id.category_check);
+        editText = myView.findViewById(R.id.edittextCategory);
         final EditText edtAmount = myView.findViewById(R.id.amount_edt);
         final Spinner edtType = myView.findViewById(R.id.dropdown);
+        edtType.setVisibility(View.VISIBLE);
+        myView.findViewById(R.id.dropdown2).setVisibility(View.INVISIBLE);
         final EditText edtNote = myView.findViewById(R.id.note_edt);
         Button btnSave = myView.findViewById(R.id.btnSave);
         Button btnCancel = myView.findViewById(R.id.btnCancel);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (checkBox.isChecked()) {
+                    edtType.setVisibility(View.INVISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+
+                } else {
+                    edtType.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = edtType.getSelectedItem().toString().trim();
+                String type;
                 String amount = edtAmount.getText().toString().trim();
                 String note = edtNote.getText().toString().trim();
+                if(checkBox.isChecked()){
+                    type = editText.getText().toString().trim();
+                }else{
+                    type = edtType.getSelectedItem().toString().trim();
+                }
+
                 if (TextUtils.isEmpty(type)) {
                     Toast.makeText(getActivity(), "Select a type", Toast.LENGTH_SHORT).show();
                     return;
@@ -285,20 +314,43 @@ public class DashboardFragment extends Fragment {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myView = inflater.inflate(R.layout.custom_layout_for_insert_data, null);
+        TextView textView = myView.findViewById(R.id.inputType);
+        textView.setText("Expense ");
         myDialog.setView(myView);
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
+        checkBox = myView.findViewById(R.id.category_check);
+        editText = myView.findViewById(R.id.edittextCategory);
         final EditText amount = myView.findViewById(R.id.amount_edt);
-        final Spinner type = myView.findViewById(R.id.dropdown);
+        final Spinner type = myView.findViewById(R.id.dropdown2);
+        type.setVisibility(View.VISIBLE);
+        myView.findViewById(R.id.dropdown).setVisibility(View.INVISIBLE);
         final EditText note = myView.findViewById(R.id.note_edt);
         Button btnSave = myView.findViewById(R.id.btnSave);
         Button btnCancel = myView.findViewById(R.id.btnCancel);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(checkBox.isChecked()){
+                    type.setVisibility(View.INVISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                }else{
+                    type.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String tmAmount = amount.getText().toString().trim();
-                String tmType = type.getSelectedItem().toString().trim();
+                String tmType;
                 String tmNote = note.getText().toString().trim();
+                if(checkBox.isChecked()){
+                    tmType = editText.getText().toString().trim();
+                }else{
+                    tmType = type.getSelectedItem().toString().trim();
+                }
                 if (TextUtils.isEmpty(tmAmount)) {
                     amount.setError("Required field");
                     return;
